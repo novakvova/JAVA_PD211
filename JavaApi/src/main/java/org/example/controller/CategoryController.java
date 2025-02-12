@@ -1,14 +1,11 @@
 package org.example.controller;
 
 import org.example.dto.category.CategoryCreateDTO;
+import org.example.dto.category.CategoryEditDTO;
 import org.example.entites.CategoryEntity;
-import org.example.repository.ICategoryRepository;
 import org.example.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -27,5 +24,15 @@ public class CategoryController {
     @PostMapping
     public CategoryEntity createCategory(CategoryCreateDTO dto) {
         return categoryService.create(dto);
+    }
+
+    @PutMapping
+    public CategoryEntity editCategory(CategoryEditDTO dto) {
+        return categoryService.edit(dto);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteCategory(@PathVariable int id) {
+        categoryService.delete(id);
     }
 }
