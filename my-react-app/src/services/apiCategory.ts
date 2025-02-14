@@ -26,8 +26,8 @@ export const apiCategory = createApi({
             invalidatesTags: ["Category"], // Інвалідовуємо "Category" після створення
         }),
         updateCategory: builder.mutation<ICategoryItem, ICategoryPutRequest>({
-            query: ({ id, ...updatedCategory }) => ({
-                url: `categories/${id}`,
+            query: (updatedCategory) => ({
+                url: `categories`,
                 method: 'PUT',
                 body: updatedCategory,
             }),

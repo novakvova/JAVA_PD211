@@ -38,7 +38,6 @@ const EditCategoryPage = () => {
                 initialValues={{
                     name: category?.name,
                     image: category?.image,
-                    creationTime: category?.creationTime,
                     description: category?.description || '',
                 }}
             >
