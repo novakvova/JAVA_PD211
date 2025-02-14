@@ -22,12 +22,12 @@ public class CategoryController {
     }
 
     @PostMapping
-    public CategoryEntity createCategory(CategoryCreateDTO dto) {
+    public CategoryEntity createCategory(@RequestBody CategoryCreateDTO dto) {
         return categoryService.create(dto);
     }
 
     @PutMapping
-    public CategoryEntity editCategory(CategoryEditDTO dto) {
+    public CategoryEntity editCategory(@RequestBody CategoryEditDTO dto) {
         return categoryService.edit(dto);
     }
 
