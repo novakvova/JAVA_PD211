@@ -2,7 +2,7 @@ package org.example.service;
 
 import org.example.dto.category.CategoryCreateDTO;
 import org.example.dto.category.CategoryEditDTO;
-import org.example.entites.CategoryEntity;
+import org.example.entities.CategoryEntity;
 import org.example.repository.ICategoryRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
