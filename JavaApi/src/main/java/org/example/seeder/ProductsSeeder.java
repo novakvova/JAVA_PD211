@@ -39,7 +39,7 @@ public class ProductsSeeder {
                 .load("https://estore.ua/media/catalog/product/cache/8/image/650x650/9df78eab33525d08d6e5fb8d27136e95/i/p/iphone-16-pro-finish-select-202409-6-3inch-naturaltitanium.png");
         var img1 = new ProductImageEntity();
         img1.setPriority(1);
-        img1.setImageUrl(imageName);
+        img1.setName(imageName);
         img1.setProduct(product1);
         productImageRepository.save(img1);
 
@@ -47,7 +47,7 @@ public class ProductsSeeder {
                 .load("https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Oryctolagus_cuniculus_Tasmania_2.jpg/719px-Oryctolagus_cuniculus_Tasmania_2.jpg");
         var img11 = new ProductImageEntity();
         img11.setPriority(2);
-        img11.setImageUrl(imageName);
+        img11.setName(imageName);
         img11.setProduct(product1);
         productImageRepository.save(img11);
 
@@ -65,7 +65,7 @@ public class ProductsSeeder {
         //product2.setImage(imageName);
         var img2 = new ProductImageEntity();
         img2.setPriority(1);
-        img2.setImageUrl(imageName);
+        img2.setName(imageName);
         img2.setProduct(product2);
         productImageRepository.save(img2);
 
@@ -81,7 +81,7 @@ public class ProductsSeeder {
                 .load("https://images.booksense.com/images/740/539/9783986539740.jpg");
         var img3 = new ProductImageEntity();
         img3.setPriority(1);
-        img3.setImageUrl(imageName);
+        img3.setName(imageName);
         img3.setProduct(product3);
         productImageRepository.save(img3);
 
