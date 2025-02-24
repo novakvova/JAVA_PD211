@@ -69,6 +69,30 @@ public class ProductService {
         cat.setId(product.getCategoryId());
         entity.setCategory(cat);
         productRepository.save(entity);
+
+        var newImageFiles = product.getImages();
+
+        if (!newImageFiles.isEmpty()){
+            //remove old images
+            var oldProductImageEntities = entity.getImages();
+            for (var productImage : oldProductImageEntities) {
+                fileService.remove(productImage.getName());
+                productImageRepository.delete(productImage);
+            }
+
+            //save new images
+            var priority = 1;
+            for (var file : newImageFiles) {
+                if (file == null || file.isEmpty()) continue;
+                var imageName = fileService.load(file);
+                var img = new ProductImageEntity();
+                img.setPriority(priority++);
+                img.setName(imageName);
+                img.setProduct(entity);
+                productImageRepository.save(img);
+            }
+        }
+
         return true;
     }
 

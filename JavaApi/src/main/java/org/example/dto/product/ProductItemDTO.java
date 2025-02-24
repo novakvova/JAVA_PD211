@@ -12,5 +12,6 @@ public class ProductItemDTO {
     private float price;
     private String categoryName;
     private String dateCreated;
-    private List<ProductImageDto> images;
+//    private List<ProductImageDto> images;
+    private List<String> images;
 }
