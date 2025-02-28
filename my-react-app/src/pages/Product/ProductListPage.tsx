@@ -76,8 +76,8 @@ const ProductsPage: React.FC = () => {
                                     {product.name}
                                 </Table.Cell>
                                 <Table.Cell>
-                                    {product.images.map((image) => (
-                                        <img
+                                    {product.images.map((image, index) => (
+                                        <img key={index}
                                             src={( APP_ENV.REMOTE_BASE_URL + '/images/medium/' +image)}
                                             alt={product.name}
                                             style={{maxHeight: "75px", maxWidth: "75px"}}
