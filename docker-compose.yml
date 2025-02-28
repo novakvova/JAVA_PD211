@@ -1,0 +1,44 @@
+version: "3.9"
+networks:
+  myAppNetwork:
+    driver: bridge
+
+services:
+  postgresServerDb:
+    container_name: container-postgres
+    image: postgres:16.1
+    ports:
+      - "5022:5432"
+    environment:
+      - POSTGRES_USER=minipig
+      - POSTGRES_PASSWORD=p%rSDj4I77mds07djc**dmUnt00dOidd3dZ_#WTi4B9Zo
+      - POSTGRES_DB=pd211
+    networks:
+      - myAppNetwork
+    volumes:
+       - d:/volumes/pd211/postgresql:/var/lib/postgresql/data  # Use the volume name msvol here
+#        - /data/postgresql/data:/var/lib/postgresql/data
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
+
+  app:
+    container_name: web_energy_container
+ #   build:
+ #     context: .
+ #     dockerfile: EnergyStandard/Dockerfile
+    image: novakvova/pd211-java
+    ports:
+      - "5062:8083"
+    networks:
+      - myAppNetwork
+    depends_on:
+      - postgresServerDb
+    volumes:
+       - d:/volumes/pd211/images:/app/images  # Use the volume name appvol here
+#     - volumes/pd211/images:/app/images  # Use the volume name appvol here
+    deploy:
+      restart_policy:
+        condition: on-failure
+        max_attempts: 5
