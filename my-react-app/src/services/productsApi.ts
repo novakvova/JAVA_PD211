@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
-import {IProduct, IProductCreate} from "../pages/Product/types";
+import {IProduct, IProductCreate, IProductEdit} from "../pages/Product/types";
 import { APP_ENV } from "../env";
 import {serialize} from "object-to-formdata";
 
@@ -33,11 +33,28 @@ export const productsApi = createApi({
             },
             invalidatesTags: ["Product"]   // Інвалідовуємо "Product" після створення
         }),
+
+        editProduct: builder.mutation<void, IProductEdit>({
+            query: (model) => {
+                try {
+                    const formData = serialize(model);
+                    return {
+                        url: `products/${model.id}`,
+                        method: 'PUT',
+                        body: formData
+                    };
+                } catch {
+                    throw new Error("Error serializing the form data.");
+                }
+            },
+            invalidatesTags: ["Product"]   // Інвалідовуємо "Product" після створення
+        }),
     }),
 });
 
 export const {
     useGetAllProductsQuery,
     useGetProductByIdQuery,
-    useCreateProductMutation
+    useCreateProductMutation,
+    useEditProductMutation
 } = productsApi;

@@ -1,9 +1,9 @@
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import {Button, Form, Input, Select, Upload, UploadFile} from "antd";
 import {IProductCreate} from "./types.ts";
 import TextArea from "antd/es/input/TextArea";
-import {useNavigate} from "react-router-dom";
-import {useCreateProductMutation} from "../../services/productsApi.ts";
+import {useNavigate, useParams} from "react-router-dom";
+import {useCreateProductMutation, useGetProductByIdQuery} from "../../services/productsApi.ts";
 import {useGetCategoriesQuery} from "../../services/apiCategory.ts";
 
 import {PlusOutlined} from '@ant-design/icons';
@@ -11,13 +11,23 @@ import {DragDropContext, Draggable, Droppable, DropResult} from "@hello-pangea/d
 
 const {Item} = Form;
 
-const ProductCreatePage : React.FC = () => {
+const ProductEditPage : React.FC = () => {
 
+    const {id} = useParams();
+    //console.log("Id", id);
     const {data: categories, isLoading: categoriesLoading, error: categoriesError} = useGetCategoriesQuery();
+    const {data: product, isLoading: productLoading, error: productError} = useGetProductByIdQuery(id!);
     const [form] = Form.useForm<IProductCreate>();
     const [selectedFiles, setSelectedFiles] = useState<UploadFile[]>([]);
     const navigate = useNavigate();
     const [createProduct, {isLoading: productIsLogding}] = useCreateProductMutation();
+
+    console.log("Product edit", product);
+    useEffect(() => {
+        if(product) {
+            form.setFieldsValue({...product});
+        }
+    },[product]);
 
     const onFinish = async (values: IProductCreate) => {
         try {
@@ -58,7 +68,7 @@ const ProductCreatePage : React.FC = () => {
 
     return (
         <>
-            <h1 className={"text-center text-4xl font-bold text-blue-500"}>Додати товар</h1>
+            <h1 className={"text-center text-4xl font-bold text-blue-500"}>Редагування товару</h1>
 
             <div style={ {maxWidth:'600px', margin:'0 auto'}}>
                 <Form
@@ -152,7 +162,7 @@ const ProductCreatePage : React.FC = () => {
                     <Item>
                         <Button type="primary" htmlType="submit"
                                 disabled={productIsLogding}>
-                            {productIsLogding ? 'Створення...' : 'Створити продукт'}
+                            {productIsLogding ? 'Збереження...' : 'Зберегти продукт'}
                         </Button>
                     </Item>
                 </Form>
@@ -161,4 +171,4 @@ const ProductCreatePage : React.FC = () => {
     )
 }
 
-export default ProductCreatePage;
+export default ProductEditPage;
