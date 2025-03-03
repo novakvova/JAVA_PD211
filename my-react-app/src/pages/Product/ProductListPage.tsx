@@ -80,7 +80,11 @@ const ProductsPage: React.FC = () => {
                                         <img key={index}
                                             src={( APP_ENV.REMOTE_BASE_URL + '/images/medium/' +image)}
                                             alt={product.name}
-                                            style={{maxHeight: "75px", maxWidth: "75px"}}
+                                            style={{
+                                                maxHeight: "75px",
+                                                maxWidth: "75px",
+                                                float: "left"
+                                           }}
                                             // className="w-16 h-16 object-cover rounded"
                                         />
                                     ))}
