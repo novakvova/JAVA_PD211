@@ -35,8 +35,14 @@ public class ProductController {
         return new ResponseEntity<>(createdProduct, HttpStatus.CREATED);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Void> updateProduct(@PathVariable Integer id, @RequestBody ProductPostDTO product) {
+    @PutMapping(path="/{id}", consumes = MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<Void> updateProduct(@PathVariable Integer id, @ModelAttribute ProductPostDTO product) {
+        //1.Отримуємо спиок усіх фото у проудкті
+        //2.Шукаємо по назву, продуктів, яких немає у product.images із актрибутом old-image
+        //3.Видаляємо дані фото і файли у файловій системі.
+        //4.Інші файли, які залишилися, мінієямо їм пріорітет згідно номера у масиві product.images
+        //5.Усі інші файли, які не type="old-image" додаємо, як нові файли і ставимо їм пріорітет - згідно
+        //номера масиву в послідовності product.images
         return productService.updateProduct(id, product)
                 ? ResponseEntity.ok().build()
                 : ResponseEntity.notFound().build();

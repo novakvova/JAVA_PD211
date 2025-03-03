@@ -1,13 +1,14 @@
 import React, {useEffect, useState} from "react";
 import {Button, Form, Input, Select, Upload, UploadFile} from "antd";
-import {IProductCreate} from "./types.ts";
+import {IProductCreate, IProductEdit} from "./types.ts";
 import TextArea from "antd/es/input/TextArea";
 import {useNavigate, useParams} from "react-router-dom";
-import {useCreateProductMutation, useGetProductByIdQuery} from "../../services/productsApi.ts";
+import {useCreateProductMutation, useEditProductMutation, useGetProductByIdQuery} from "../../services/productsApi.ts";
 import {useGetCategoriesQuery} from "../../services/apiCategory.ts";
 
 import {PlusOutlined} from '@ant-design/icons';
 import {DragDropContext, Draggable, Droppable, DropResult} from "@hello-pangea/dnd";
+import {APP_ENV} from "../../env";
 
 const {Item} = Form;
 
@@ -17,23 +18,30 @@ const ProductEditPage : React.FC = () => {
     //console.log("Id", id);
     const {data: categories, isLoading: categoriesLoading, error: categoriesError} = useGetCategoriesQuery();
     const {data: product, isLoading: productLoading, error: productError} = useGetProductByIdQuery(id!);
-    const [form] = Form.useForm<IProductCreate>();
+    const [form] = Form.useForm<IProductEdit>();
     const [selectedFiles, setSelectedFiles] = useState<UploadFile[]>([]);
     const navigate = useNavigate();
-    const [createProduct, {isLoading: productIsLogding}] = useCreateProductMutation();
+    const [editProduct, {isLoading: productIsLogding}] = useEditProductMutation();
 
     console.log("Product edit", product);
     useEffect(() => {
         if(product) {
             form.setFieldsValue({...product});
+            const files = product?.images.map(x=>({
+                uid: x,
+                url: `${APP_ENV.REMOTE_BASE_URL}/images/medium/${x}`,
+                originFileObj: new File([new Blob([''])],x,{type: 'old-image'})
+            }) as UploadFile);
+            setSelectedFiles(files);
         }
     },[product]);
 
-    const onFinish = async (values: IProductCreate) => {
+    const onFinish = async (values: IProductEdit) => {
         try {
             values.images = selectedFiles.map(x=>x.originFileObj as File);
+            values.id = product!.id;
             console.log("Server send data: ", values);
-            const response = await createProduct(values).unwrap();
+            const response = await editProduct(values).unwrap();
             console.log("Категорія успішно створена:", response);
             navigate("..");
         } catch (error) {
