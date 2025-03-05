@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from "react";
 import {Button, Form, Input, Select, Upload, UploadFile} from "antd";
-import {IProductCreate, IProductEdit} from "./types.ts";
+import {IProductEdit} from "./types.ts";
 import TextArea from "antd/es/input/TextArea";
 import {useNavigate, useParams} from "react-router-dom";
-import {useCreateProductMutation, useEditProductMutation, useGetProductByIdQuery} from "../../services/productsApi.ts";
+import {useEditProductMutation, useGetProductByIdQuery} from "../../services/productsApi.ts";
 import {useGetCategoriesQuery} from "../../services/apiCategory.ts";
 
 import {PlusOutlined} from '@ant-design/icons';
@@ -73,6 +73,12 @@ const ProductEditPage : React.FC = () => {
 
         setSelectedFiles([...selectedFiles, ...newFileList]);
     };
+
+    if(productLoading)
+        return <p>Product loading...</p>;
+
+    if(productError)
+        return <p>Error loading data...</p>;
 
     return (
         <>
