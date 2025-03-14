@@ -9,6 +9,8 @@ import org.example.service.UserService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.Map;
+
 @RestController
 @RequestMapping("/auth")
 @RequiredArgsConstructor
@@ -18,12 +20,14 @@ public class AuthController {
 
     // Реєстрація нового користувача
     @PostMapping("/register")
-    public ResponseEntity<String> register(@Valid @RequestBody UserRegisterDto dto) {
+    public ResponseEntity<?> register(@Valid @RequestBody UserRegisterDto dto) {
         try {
+            //log.info("Отримано запит на реєстрацію: {}", dto);
             userService.registerUser(dto);
-            return ResponseEntity.ok("Користувач успішно зареєстрований");
+            return ResponseEntity.ok(Map.of("message", "Користувач успішно зареєстрований"));
         } catch (Exception e) {
-            return ResponseEntity.badRequest().body("Помилка при реєстрації: " + e.getMessage());
+            //log.error("Помилка реєстрації", e);
+            return ResponseEntity.badRequest().body(Map.of("error", "Помилка при реєстрації: " + e.getMessage()));
         }
     }
 

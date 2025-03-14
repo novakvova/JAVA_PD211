@@ -26,6 +26,12 @@ const Header: React.FC = () => {
                             Contact
                         </a>
                     </li>
+
+                    <li>
+                        <a href="/register" className="text-gray-600 hover:text-blue-500">
+                            Реєстрація
+                        </a>
+                    </li>
                 </ul>
             </nav>
         </header>
