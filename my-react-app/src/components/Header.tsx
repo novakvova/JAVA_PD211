@@ -28,6 +28,12 @@ const Header: React.FC = () => {
                     </li>
 
                     <li>
+                        <a href="/login" className="text-gray-600 hover:text-blue-500">
+                            Вхід
+                        </a>
+                    </li>
+
+                    <li>
                         <a href="/register" className="text-gray-600 hover:text-blue-500">
                             Реєстрація
                         </a>
