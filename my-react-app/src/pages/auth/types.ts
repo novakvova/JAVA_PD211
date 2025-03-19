@@ -16,3 +16,17 @@ export interface LoginButtonProps{
     onLogin:(token: string) => void
     icon: ReactNode
 }
+
+export interface LoginGoogleRequest{
+    token:string
+}
+
+export interface AuthResponse{
+    token:string
+}
+
+export interface IUser {
+    id: number;
+    email: string;
+    roles: string[];
+}

@@ -5,31 +5,38 @@ import { GoogleOutlined } from '@ant-design/icons';
 import GoogleLoginButton from "./GoogleLoginButton.tsx";
 import {IUserLoginRequest} from "./types.ts";
 // import {useNavigate} from "react-router-dom";
-// import {useRegisterUserMutation} from "../../services/authApi.ts";
+import {useGoogleLoginUserMutation, useLoginUserMutation} from "../../services/authApi.ts";
+import {useNavigate} from "react-router-dom";
 
 const {Item} = Form;
 
 const LoginPage: React.FC = () => {
 
     const [form] = Form.useForm<IUserLoginRequest>();
-    // const navigate = useNavigate();
-    // const [registerUser] = useRegisterUserMutation();
+    const navigate = useNavigate();
+    const [googleLoginUser] = useGoogleLoginUserMutation();
+    const [loginUser] = useLoginUserMutation();
 
     const onFinish = async (values: IUserLoginRequest) => {
-
-        console.log("Login user", values);
-        // try {
-        //     console.log("Register user", values);
-        //     const response = await registerUser(values).unwrap();
-        //     console.log("Користувача успішно зареєстровано", response);
-        //     navigate("..");
-        // } catch (error) {
-        //     console.error("Поилка при реєстрації", error);
-        // }
+        //console.log("Login user", values);
+        try {
+            const response = await loginUser(values).unwrap();
+            console.log("Користувача успішно зайшов через username", response);
+            navigate("..");
+        } catch (error) {
+            console.error("Поилка при реєстрації", error);
+        }
     }
 
-    const onLoginGoogleResult = (tokenGoogle:string) => {
-        console.log("google token", tokenGoogle);
+    const onLoginGoogleResult = async (tokenGoogle:string) => {
+        try {
+            console.log("Register user", tokenGoogle);
+            const response = await googleLoginUser({token: tokenGoogle}).unwrap();
+            console.log("Користувача успішно зайшов через google", response);
+            navigate("..");
+        } catch (error) {
+            console.error("Поилка при реєстрації", error);
+        }
     }
 
     return (

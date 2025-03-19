@@ -7,7 +7,7 @@ const GoogleLoginButton: React.FC<LoginButtonProps> = ({ onLogin, title, icon })
     //Викликаємо AccessToken для доступу до інформації
     const login = useGoogleLogin({
         onSuccess: async (authCodeResponse) => {
-            console.log("Login Google Token", authCodeResponse.access_token);
+            //console.log("Login Google Token", authCodeResponse.access_token);
             onLogin(authCodeResponse.access_token);
             // const result = await accountService.googleLogin({ token: authCodeResponse.access_token });
             // if (result.status === 200) {
