@@ -2,8 +2,7 @@
 import {createApi, fetchBaseQuery} from "@reduxjs/toolkit/query/react";
 import {APP_ENV} from "../env";
 import {AuthResponse, IUserLoginRequest, IUserRegisterRequest, LoginGoogleRequest} from "../pages/auth/types.ts";
-import {jwtParse} from "../utilities/jwtParse.ts";
-
+import {setCredentials} from "../store/slices/userSlice.ts";
 
 export const authApi = createApi({
     reducerPath: 'authApi', // Унікальний шлях для цього API у Redux Store
@@ -28,15 +27,10 @@ export const authApi = createApi({
             async onQueryStarted(arg, { dispatch, queryFulfilled }) {
                 try {
                     const result = await queryFulfilled;
-                    //console.log("Login user", result);
+                    console.log("Google auth user", arg);
                     if (result.data && result.data.token) {
-                        const userInfo = jwtParse(result.data.token);
-                        console.log("user info", userInfo);
-                        // dispatch(setCredentials({ token: result.data.accessToken, refreshToken: result.data.refreshToken, remember: arg.remember }))
-                        // dispatch(accountApiAuth.util.invalidateTags(["Favorites"]));
-                        // dispatch(advertApi.util.invalidateTags(["Advert","Adverts","Locked","NotApproved","AdvertImages"]));
-                        // dispatch(advertAuthApi.util.invalidateTags(["UserAdvert","UserAdverts"]));
-                        // dispatch(adminMessageAuthApi.util.invalidateTags(["AdminMessages","Messeges","UnreadedMessages"]));
+                        dispatch(setCredentials({ token: result.data.token }));
+
                     }
                 } catch (error) {
                     console.error('Login failed:', error);
