@@ -16,6 +16,7 @@
     "@types/react-redux": "^7.1.34",
     "antd": "^5.23.1",
     "axios": "^1.7.9",
+    "cropperjs": "^1.6.2",
     "flowbite-react": "^0.10.2",
     "jwt-decode": "^4.0.0",
     "object-to-formdata": "^4.5.1",
